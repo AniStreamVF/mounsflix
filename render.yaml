@@ -1,8 +1,11 @@
 services:
   - type: web
     name: mounsflix
-    runtime: docker
+    runtime: node
     plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
     envVars:
       - key: TMDB_API_KEY
         sync: false   # à renseigner dans le dashboard Render
