@@ -6,7 +6,7 @@
 - Env sandbox : torsocks (`LD_PRELOAD=libtorsocks.so`, `ALL_PROXY=socks5h://127.0.0.1:9050`) → toujours `env -u LD_PRELOAD -u ALL_PROXY` pour serveur/curl/tests.
 - Serveur local : `cd /home/mouns/mounsflix-app && env -u LD_PRELOAD -u ALL_PROXY setsid -f node server.js >/tmp/opencode/mf-server.log 2>&1 < /dev/null` (PID à vérifier avec pgrep/fuser). Arrêt : `pkill -f 'node.*server.js'` ou par PID (`ps -eo pid,cmd | grep '[n]ode'`). Les `&`/nohup simples meurent (timeout bash) — `setsid -f` fiable.
 - **Le serveur sert les fichiers statiques depuis le disque → pas besoin de redémarrer après édition de public/index.html.**
-- Clé TMDB dans `/home/mouns/mounsflix-app/.env` : `61bebc28e3810a5026f5da59c18a1b69` (api_key, pas Bearer).
+- Clé TMDB : définie uniquement en variable d'env sur la plateforme d'hébergement (jamais commitée).
 - **INTÉGRATION GOWARU (fait ce jour)** : 8 providers du bundle ajoutés (Anime-Ultime, AnimeSama.co, AnimesUltra, AnimeVOSTFR, French-Manga, VoirAnime, VoirAnime.rip, VoirAnime.homes). Bundles CJS copiés dans `lib/nuvio-providers/*.cjs` — **renommés en .cjs obligatoirement** car `package.json` est `"type":"module"` (un `.js` CJS y est exécuté en ESM → `module.exports` ignoré, require renvoie `{}`). Loader/adaptateur dans `lib/gowaru.js` (createRequire + mapping vers le format local {id,name,url,quality,language,format,headers}).
   - Budget : non-anime = 6,5 s (abort propre via AbortController) ; anime (détection `original_language==='ja'` ou titre japonais/mots-clés) = 14 s (les bundles sont calibrés 45 s avec probes multi-domaines).
   - Filtre DIRECT appliqué dans `adapt()` (seules les URLs `.mp4/.m3u8/.mkv/.webm/.mpd` passent) + dédup URL + exclusion MKV/mpd côté handler.
