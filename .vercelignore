@@ -1,0 +1,7 @@
+node_modules
+.env
+.git
+Dockerfile
+render.yaml
+README-DEPLOY.md
+AGENTS-NOTES.md

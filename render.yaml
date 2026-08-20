@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: mounsflix
+    runtime: docker
+    plan: free
+    envVars:
+      - key: TMDB_API_KEY
+        sync: false   # à renseigner dans le dashboard Render
+      - key: OPENSUBTITLES_API_KEY
+        sync: false
+      - key: OPENSUBTITLES_USER
+        sync: false
+      - key: OPENSUBTITLES_PASS
+        sync: false
+      - key: DATABASE_URL
+        sync: false
